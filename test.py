@@ -4,4 +4,4 @@ def gugudan():
 
 gugudan()
 print("good")
-print("hi")
+print("hello")
