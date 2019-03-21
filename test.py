@@ -1,4 +1,6 @@
-for i in range(9):
-    print(i)
+def gugudan():
+    for i in range(9):
+        print(i)
 
+gugudan()
 
