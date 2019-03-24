@@ -1,0 +1,176 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext">
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <title>Django Girls blog</title>
+	<meta charset="utf-8">
+	<style>
+	button{
+		backgorund: white;
+		border: 1px solid gray;
+		margin:0 5px;
+		cursor: pointer;
+	}
+
+	button.active {
+		background: blue;
+		color: white;
+		border-color: blue;
+	}
+	</style>
+</head>
+<body>
+        <div class="page-header">
+			{% if user.is_authenticated %}
+				<a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+			{% endif %}
+            <h1><a href="/">Django Girls Blog</a></h1>
+        </div>
+
+        <hr/>
+
+        <div class="content container">
+            <div class="row">
+                <div class="col-md-8">
+                    {% block yejin%}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <p>published: 14.06.2014, 12:14</p>
+            <h2><a href="">My first post</a></h2>
+            <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+        </div>
+
+        <div>
+            <p>published: 14.06.2014, 12:14</p>
+            <h2><a href="">My second post</a></h2>
+            <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut f.</p>
+        </div>
+	<div id="app">{{ message }}
+		<input type="text" v-model="message"/>
+	</div>
+	<div id="app-2">
+		<h1 v-if="seen">나는 보인다.</h1> <!-- 처리하지 않고 아예 주석처리 -->
+		<h1 v-show="seen">나는 보인다.</h1> <!-- 모두 처리하되 디스플레이만 None -->
+	</div>
+	<div id='app-3'>
+		<ul>
+			<li v-for="n in numbers">{{ n}}</li>
+		</ul>
+		<table>
+			<thead>
+				<tr>
+					<th>이름</th>
+					<th>나이</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="p in people" v-if="p.age>25">
+					<td>{{p.name}}</td>
+					<td>{{p.age}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div id="app-4"><!-- v-on 디렉티브의 종류, v-on:를 @로 대체 가능 -->
+		<h1 v-if="seen">나는 보여ㅑ요</h1>
+		<button @click="seen = !seen">버튼</button>
+		<hr />
+
+		<button @click="alert('버튼을 클릭했소')">버튼^^7</button>
+		<hr />
+		<button v-on:dblclick="alert('버튼을 두번 클릭했소')">버튼^^7</button>
+		<hr />
+
+		<button v-on:click="add()">버튼</button>
+		<ul>
+			<li v-for="n in numbers">{{n}}</li>
+		</ul>
+		<input type="text" v-model="animal" v-on:keyup.enter="capture()">
+		<ul>
+			<li v-for="a in animals">{{a}}</li>
+		</ul>
+	</div>
+
+	<div id="app-5"> <!-- v-bind 디렉티브 내용. v-bind: 를 : 으로 처리가능-->
+		<button v-for="p in pages" :class="{ 'active' : page === p }" @click="page = p">{{p}}</button>
+		<hr />
+		<div v-for="p in pages" v-if="page === p">
+			<p> {{p}} contents </p>
+			<img v-bind:src="'img/' + p + '.png'" />
+		</div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script>
+		var app1 = new Vue({
+			el: '#app',
+			data: {
+				message: '첫 번째 vue.js 앱!'
+			}
+		})
+		var app2 = new Vue({
+			el: '#app-2',
+			data: {
+				seen: false
+			}
+		})
+		var app3 = new Vue({
+			el: '#app-3',
+			data: {
+				numbers: [1,2,3,4,5],
+				people: [
+					{
+						name:'순신',
+						age: 30
+					},
+					{
+						name:'길동',
+						age: 23
+					},
+					{
+						name:'예진',
+						age: 22
+					}
+				]
+			}
+		})
+		var app4 = new Vue({
+			el: '#app-4',
+			data: {
+				seen: true,
+				numbers:[1,2,3,4,5],
+				animal: null,
+				animals:['lion','tiger','dog','cat','eagle']
+			},
+			methods: {
+				add: function(){
+					var lastNum = this.numbers[this.numbers.length - 1];
+					lastNum += 1;
+					this.numbers.push(lastNum)
+				},
+				capture: function(){
+					if(this.animal){
+						this.animals.push(this.animal)
+						this.animal = null;
+					}
+				}
+			}
+		})
+		var app5 = new Vue({
+			el: '#app-5',
+			data: {
+				page: 'page1',
+				pages: ['page1','page2','page3','page4']
+			}
+		})
+
+	</script>
+</body>
+</html>
